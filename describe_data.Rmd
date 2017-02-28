@@ -1,13 +1,14 @@
 ---
-title: "Appendix: Understanding and Predicting Web Content Credibility"
+title: 'Appendix: Understanding and Predicting Web Content Credibility'
 author: "Michał Kąkol"
 date: "24 02 2017"
 output:
+  pdf_document:
+    toc: yes
   html_notebook:
-    toc: true
-    number_sections: true
-    
     code_folding: hide
+    number_sections: yes
+    toc: yes
 ---
 ```{R,echo=FALSE}
 library(dplyr)
