@@ -1,0 +1,150 @@
+---
+title: "Appendix: Understanding and Predicting Web Content Credibility"
+author: "Michał Kąkol"
+date: "24 02 2017"
+output:
+  html_notebook:
+    toc: true
+    number_sections: true
+    
+    code_folding: hide
+---
+```{R,echo=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+# This appendix motivation
+
+This is a data set report supplementing the article "Understanding and Predicting Web Content Credibility: Newly Identified Factors". The main purpose of this report is to describe the data set covered in the article in more detail thus extending the limited space of the publication.
+
+OPIS RELACJI MIĘDZY TABELAMI
+ -> JAK ZBIERANO DANE, OPIS PROCESU
+
+LINK DO MOCKUPU 
+
+# Tables
+
+This section describes data set tables.
+
+## Evaluations
+
+This table consists of raters' evaluations of the web pages they were presented. The rater was presented with the archived version of the web site and asked to evaluate it in several dimensions as well as leave a textual justification of the evaluation outcome.
+
+* **rater_id**, \<fctr\\> - ID of a person that evaluated the web page
+* **documentevaluation_id**, \<fctr\> - ID of the aforementioned evaluation
+* **document_id**, \<fctr\> - ID of the web page
+* **documentevaluation_start**, \<dttm\> - timestamp opening the evaluation
+* **documentevaluation_end**, \<dttm\> - timestamp closing the evaluation
+* **documentevaluation_description**, \<chr\> -  tags describing the web page contents, left by the reater
+* **documentevaluation_comment**, \<chr\> - rater's textual justification of the evaluation outcome
+* **documentevaluation_website1**, \<chr\> - web site URL related to evaluation of the web page
+* **documentevaluation_website2**, \<chr\> - vide supra
+* **documentevaluation_website3**, \<chr\> - vide supra
+* **documentevaluation_credibility**, \<int\> - web page credibility score
+* **documentevaluation_presentation**, \<int\> - web page presentation score
+* **documentevaluation_knowledge**, \<int\> - web page author knowledge score
+* **documentevaluation_intentions**, \<int\> - web page author intentions score
+* **documentevaluation_completeness**, \<int\> - web page completeness score
+* **documentevaluation_experience**, \<lgl\> - rater experience with web page subject score
+* **documentevaluation_opinion**, \<lgl\> - rater opinion 
+* **documentevaluation_knowledgeable**, \<lgl\> - 
+* **documentevaluation_baddescription** \<lgl\> - whether the evaluation has errorneous tag description
+* **documentevaluation_badcomment**, \<lgl\> - whether the evaluation has errorneous textual justification
+* **documentevaluation_badwebsites**, \<lgl\> - whether the evaluation has errorneous related web pages
+* **personexperimentround_id**, \<fctr\> - ID of the batch of corresponding **documentevaluation_id**
+
+```{r}
+head(c3.evaluations)
+```
+
+## Golden examples
+
+This section describes the golden examples used for validating the rater' work.
+
+* **documentevaluation_id**, <fctr> - ID of the golden example
+* **tag_code**, <fctr> - ID of the tag being validated
+* **gold_text**, <chr> - golden example text
+* **tag_label**, <chr> - related tag label
+* **tag_group**, <fctr> - (temporary) tag group
+
+```{R}
+c3.golden %>%
+  select(tag_code,tag_label,tag_group,gold_text)
+```
+
+## Labelers
+
+This section describes the labelers table. Each row is a labeler, i.e. MTurk job participant tagging the web site evaluation textual justifications.
+
+* **person_id**, \<fctr\> - 
+* **is_gold**, \<chr\> - 
+* **is_test**, \<lgl\> - 
+* **personexperiment_type**, \<fctr\> - 
+* **person_gender**, \<fctr\> - 
+* **person_birthyr**, \<fctr\> - 
+* **person_education**, \<fctr\> - 
+* **person_wage**, \<fctr\> - 
+* **person_politics**, \<fctr\> - 
+* **person_state**, \<fctr\> - 
+* **person_country**, \<fctr\> - 
+
+## Labelings
+
+* **commentlabeling_id**, \<fctr\> - 
+* **person_id**, \<fctr\> - 
+* **rater_id**, \<fctr\> - 
+* **documentevaluation_id**, \<fctr\> - 
+* **document_id**, \<fctr\> - 
+* **start**, \<dttm\> - 
+* **end**, \<dttm\> - 
+* **answer**, \<chr\> - 
+* **rejected**, \<lgl\> - 
+* **is_test**, \<lgl\> - 
+* **is_gold**, \<lgl\> - 
+* **is_finished**, \<lgl\> - 
+* **is_ok**, \<lgl\> - 
+
+
+## Labelings (exploded)
+
+* **commentlabeling_id**, \<fctr\> - 
+* **person_id**, \<fctr\> - 
+* **documentevaluation_id**, \<fctr\> - 
+* **document_id**, \<fctr\> - 
+* **category**, \<chr\> - 
+* **credibility**, \<int\> - 
+* **label**, \<fctr\> - 
+
+```{r}
+head(c3.labelings)
+```
+
+```{r}
+temp <- c3.labelings[c3.labelings$is_ok == TRUE,]
+temp$duration <- temp$end-temp$start
+summary(as.numeric(temp$duration))
+hist(as.numeric(temp$end-temp$start),breaks = 100,)
+```
+
+## Sites
+
+* **document_id**, \<fctr\> - 
+* **document_url**, \<chr\> - 
+* **document_category_id**, \<fctr\> - 
+* **document_children**, \<int\> - 
+* **document_source_type**, \<fctr\> - 
+* **document_source_name**, \<fctr\> - 
+* **document_category_name**, \<fctr\> - 
+
+## Tags
+
+* **tag_code**, \<fctr\> - 
+* **tag_label**, \<chr\> - 
+* **tag_group**, \<fctr\> - 
+
+```{r}
+c3.tags
+```
+
+

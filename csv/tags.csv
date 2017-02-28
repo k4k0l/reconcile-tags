@@ -1,0 +1,24 @@
+tag_code,tag_label,tag_group
+0,N/A,N/A
+11,Type of internet content,What is it?
+21,Advertising,Is it of commercial character?
+22,Sales offer,Is it of commercial character?
+23,Unknown or bad intentions,Is it of commercial character?
+31,Author's identity,Who is the author or publisher?
+32,Authority,Who is the author or publisher?
+33,Official page,Who is the author or publisher?
+34,What is the source,Who is the author or publisher?
+35,Big community,Who is the author or publisher?
+41,Broken links,How does it look like?
+42,A lot of links,How does it look like?
+43,Contact information,How does it look like?
+44,Content organization,How does it look like?
+45,Design look,How does it look like?
+51,Easy to read,How does it look like?
+52,Language,How does it look like?
+53,"Informitivity, completeness",How does it look like?
+61,Easy to verify,Is it verifiable?
+62,Objectivity,Is it verifiable?
+63,References,Is it verifiable?
+64,Freshness - up to date,Is it verifiable?
+65,Viewer's experience,Is it verifiable?

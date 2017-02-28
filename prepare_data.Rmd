@@ -1,0 +1,276 @@
+---
+title: "Data preparation"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+```{R,include=FALSE}
+#source("lib/ggcorplot.R")
+library(dplyr)
+```
+
+# Original data file
+
+An Excel/OpenOffice Calc sheet is exported to single CSV files, which are described below.
+
+Here are contents of the export directory:
+```{bash}
+ls -lh csv
+```
+
+* **evaluations** - contains webpage evaluations and their according textual justifications
+
+```{R}
+# Load data file -----
+c3 <- list() # C3 data set
+c3.evaluations <- read.csv("csv/evaluations.csv")
+c3.sites <- read.csv("csv/sites.csv")
+c3.labelers <- read.csv("csv/labelers.csv")
+c3.tags <- read.csv("csv/tags.csv")
+c3.golden <- read.csv("csv/golden_examples.csv")
+c3.labelings <- read.csv("csv/evaluations_labelings.csv")
+c3.labelings_exploded <- read.csv("csv/evaluations_labelings_exploded.csv")
+```
+
+## "Evaluations"
+
+```{r}
+glimpse(c3.evaluations)
+```
+
+Change column type:
+
+* documentevaluation_id to factor
+* document_id to factor
+* documentevaluation_start to time
+* documentevaluation_end to time
+* documentevaluation_description  to character
+* documentevaluation_comment to character
+* documentevaluation_website1 to character
+* documentevaluation_website2 to character
+* documentevaluation_website3 to character
+* documentevaluation_experience to boolean
+* documentevaluation_opinion to boolean
+* documentevaluation_knowledgable to boolean
+* documentevaluation_baddescription to boolean
+* documentevaluation_badcomment to boolean
+* documentevaluation_badwebsites to boolean
+* personexperimentround_id to factor
+
+Drop column
+rater_id.1
+
+```{R}
+# Change column types ----
+c3.evaluations$documentevaluation_id <- as.factor(c3.evaluations$documentevaluation_id)
+c3.evaluations$document_id <- as.factor(c3.evaluations$document_id)
+show_miliseconds <- options(digits.secs=6)
+c3.evaluations$documentevaluation_start <- strptime(c3.evaluations$documentevaluation_start, "%Y-%m-%d %H:%M:%OS")
+c3.evaluations$documentevaluation_end <- strptime(c3.evaluations$documentevaluation_end, "%Y-%m-%d %H:%M:%OS")
+c3.evaluations$documentevaluation_description <- as.character(c3.evaluations$documentevaluation_description)
+c3.evaluations$documentevaluation_comment <- as.character(c3.evaluations$documentevaluation_comment)
+c3.evaluations$documentevaluation_website1 <- as.character(c3.evaluations$documentevaluation_website1)
+c3.evaluations$documentevaluation_website2 <- as.character(c3.evaluations$documentevaluation_website2)
+c3.evaluations$documentevaluation_website3 <- as.character(c3.evaluations$documentevaluation_website3)
+c3.evaluations$documentevaluation_experience <- as.logical(c3.evaluations$documentevaluation_experience)
+c3.evaluations$documentevaluation_opinion <- as.logical(c3.evaluations$documentevaluation_opinion)
+c3.evaluations$documentevaluation_knowledgeable <- as.logical(c3.evaluations$documentevaluation_knowledgeable)
+c3.evaluations$documentevaluation_baddescription <- as.logical(c3.evaluations$documentevaluation_baddescription)
+c3.evaluations$documentevaluation_badcomment <- as.logical(c3.evaluations$documentevaluation_badcomment)
+c3.evaluations$documentevaluation_badwebsites <- as.logical(c3.evaluations$documentevaluation_badwebsites)
+c3.evaluations$personexperimentround_id <- as.factor(c3.evaluations$personexperimentround_id)
+```
+
+
+```{R,options(width=50)}
+glimpse(c3.evaluations)
+```
+
+If we are aware of any bugs in the data, we clean them.
+
+```{r}
+c3.evaluations$documentevaluation_credibility[c3.evaluations$documentevaluation_credibility>5] <- NA
+```
+
+
+
+
+## "Sites"
+
+```{r}
+glimpse(c3.sites)
+```
+
+Change column type:
+
+* document_id to factor
+* document_url to character
+* document_category_id to factor
+
+Drop column
+
+* rater_id.1
+
+```{R}
+# Change column types ----
+c3.sites$document_id <- as.factor(c3.sites$document_id)
+c3.sites$document_url <- as.character(c3.sites$document_url)
+c3.sites$document_category_id <- as.factor(c3.sites$document_category_id)
+```
+
+
+```{R}
+glimpse(c3.sites)
+```
+
+## "Labelers"
+
+```{r}
+glimpse(c3.labelers)
+```
+
+Change column type:
+
+* all to factors except is_test
+* person_user_username as character 
+
+```{R}
+# Change column types ----
+c3.labelers$person_id <- as.factor(c3.labelers$person_id)
+c3.labelers$person_user_username <- as.character(c3.labelers$person_user_username)
+colnames(c3.labelers)[3] <- "is_test"
+c3.labelers$person_id <- as.factor(c3.labelers$person_id)
+c3.labelers$person_user_username <- as.character(c3.labelers$person_user_username)
+c3.labelers$is_test <- as.logical(c3.labelers$is_test)
+c3.labelers$person_gender <- as.factor(c3.labelers$person_gender)
+c3.labelers$person_birthyr <- as.factor(c3.labelers$person_birthyr)
+c3.labelers$person_education <- as.factor(c3.labelers$person_education)
+c3.labelers$person_wage <- as.factor(c3.labelers$person_wage)
+c3.labelers$person_politics <- as.factor(c3.labelers$person_politics)
+c3.labelers$person_state <- as.factor(c3.labelers$person_state)
+c3.labelers$person_country <- as.factor(c3.labelers$person_country)
+```
+
+
+```{R}
+glimpse(c3.labelers)
+```
+
+## "Tags"
+
+```{r}
+glimpse(c3.tags)
+```
+
+Change column type:
+
+```{R}
+# Change column types ----
+c3.tags$tag_code <- as.factor(c3.tags$tag_code)
+c3.tags$tag_label <- as.character(c3.tags$tag_label)
+c3.tags$tag_group <- as.factor(c3.tags$tag_group)
+```
+
+
+```{R}
+glimpse(c3.tags)
+```
+
+
+## "Golden examples"
+
+```{r}
+glimpse(c3.golden)
+```
+
+Change column type:
+
+
+```{R}
+# Change column types ----
+c3.golden$documentevaluation_id <- as.factor(c3.golden$documentevaluation_id)
+colnames(c3.golden)[2] <- "is_gold"
+c3.golden$is_gold <- as.logical(c3.golden$is_gold)
+c3.golden$gold_url <- as.character(c3.golden$gold_url)
+c3.golden$tag_code <- as.factor(c3.golden$tag_code)
+
+c3.golden %>% 
+  select(-gold_category) %>%
+  as.data.frame() -> c3.golden
+
+c3.golden$gold_text <- as.character(c3.golden$gold_text)
+
+c3.golden %>%
+  left_join(c3.tags,by="tag_code") -> c3.golden
+```
+
+
+```{R}
+glimpse(c3.golden)
+```
+
+## "Evaluation labelings"
+
+```{r}
+glimpse(c3.labelings)
+```
+
+Change column type:
+
+```{R}
+# Change column types ----
+
+c3.labelings$commentlabeling_id <- as.factor(c3.labelings$commentlabeling_id)
+c3.labelings$labeller_id <- as.factor(c3.labelings$labeller_id)
+colnames(c3.labelings)[2] <- "person_id"
+c3.labelings$rater_id <- as.factor(c3.labelings$rater_id)
+c3.labelings$documentevaluation_id <- as.factor(c3.labelings$documentevaluation_id)
+c3.labelings$document_id <- as.factor(c3.labelings$document_id)
+show_miliseconds <- options(digits.secs=6)
+c3.labelings$start <- strptime(c3.labelings$start, "%Y-%m-%d %H:%M:%OS")
+c3.labelings$end <- strptime(c3.labelings$end, "%Y-%m-%d %H:%M:%OS")
+c3.labelings$answer <- as.character(c3.labelings$answer)
+c3.labelings$rejected <- as.logical(c3.labelings$rejected)
+c3.labelings$is_test. <- as.logical(c3.labelings$is_test.)
+colnames(c3.labelings)[10] <- "is_test"
+c3.labelings$is_gold. <- as.logical(c3.labelings$is_gold.)
+colnames(c3.labelings)[11] <- "is_gold"
+c3.labelings$is_finished. <- as.logical(c3.labelings$is_finished.)
+colnames(c3.labelings)[12] <- "is_finished"
+c3.labelings$is_ok. <- as.logical(c3.labelings$is_ok.)
+colnames(c3.labelings)[13] <- "is_ok"
+c3.labelings$documentevaluation_id <- as.factor(c3.labelings$documentevaluation_id)
+colnames(c3.golden)[2] <- "is_gold"
+```
+
+```{R}
+glimpse(c3.labelings)
+```
+
+
+## "Evaluation labelings exploded"
+
+```{r}
+glimpse(c3.labelings_exploded )
+```
+
+Change column type:
+
+```{R}
+# Change column types ----
+c3.labelings_exploded %>%
+  select(-is_ok.,-labelcat) -> c3.labelings_exploded
+c3.labelings_exploded$commentlabeling_id <- as.factor(c3.labelings_exploded$commentlabeling_id)
+c3.labelings_exploded$person_id <- as.factor(c3.labelings_exploded$person_id)
+c3.labelings_exploded$documentevaluation_id <- as.factor(c3.labelings_exploded$documentevaluation_id)
+c3.labelings_exploded$document_id <- as.factor(c3.labelings_exploded$document_id)
+c3.labelings_exploded$category <- as.character(c3.labelings_exploded$category)
+c3.labelings_exploded$label <- as.factor(c3.labelings_exploded$label)
+```
+
+```{R}
+glimpse(c3.labelings_exploded)
+```
+
+
