@@ -1,0 +1,416 @@
+
+
+var row_index;
+var A_LEFT = 37;
+var A_UP = 38;
+var A_RIGHT = 39;
+var A_DOWN = 40;
+var VIEWPORT_WIDTH = 500; // $(#img).width()
+
+
+$(document).ready(function() {
+
+	$('#table_items_tbody').delegate(".item-row-duplicate", "click", itemrow_duplicate)
+	$('#table_items_tbody').delegate(".item-row-remove", "click", itemrow_remove_safeguard)
+	$('.imgs_uri').loupe({
+		width: 160, // width of magnifier
+		height: 100, // height of magnifier
+		loupe: 'loupe' // css class for magnifier
+	});
+
+	$(document).keydown(function(e) {
+	    var code = (e.keyCode ? e.keyCode : e.which);
+	    if ((code==A_UP) &&  (e.ctrlKey || e.metaKey )){
+	        $(".imgs").css('width', "+=24").css('height', "+=25");
+	        var current = $('#viewport').scrollLeft();
+	        $('#viewport').scrollLeft(current+12);
+	    }
+	    if ((code==A_DOWN) &&  (e.ctrlKey || e.metaKey )){
+	        $(".imgs").css('width', "-=24").css('height', "-=25");
+	        var current = $('#viewport').scrollLeft();
+	        $('#viewport').scrollLeft(current-12);
+	    }
+	    if (e.shiftKey && (code==A_UP || code ==A_DOWN)){
+	        var delta = 100 * ( (e.keyCode==A_UP) ? -1:1);
+	        var current = $('#viewport').scrollTop();
+	        $('#viewport').scrollTop( current + delta);
+	    }
+	    if (e.shiftKey && (code==A_LEFT || code ==A_RIGHT)){
+	        var delta = 30 * ( (e.keyCode==A_LEFT) ? -1:1);
+	        var current = $('#viewport').scrollLeft();
+	        $('#viewport').scrollLeft( current + delta);
+	    }
+	});
+	$("#transaction_datetime").each(function() {
+		$(this).change(function() {
+			var option = $(this).val()
+			if (option == "NO_TXN_DATE"){
+				$("#no_date_acc_div").toggle()
+			} else {
+				$("#no_date_acc_div").hide()
+			}
+		})
+	})
+	$("#no_date_acc_div").each(function() {
+		$(this).hide()
+	})
+    $("#no_date_acc").click(function () {
+    	 $("#mturk_form").validate().element("#transaction_datetime");
+    });
+    $("#legible").focus();
+	var availableTags = get_banner_names()
+    var bannerPrioritiesMap = get_banner_priorities()
+	$( "#banner" ).autocomplete({
+		source: function(request, response) {
+			// avoiding transition period
+			var name2key = window.get_banner_name2key_mapping && window.get_banner_name2key_mapping() || {}
+			// replace with simple `var name2key=get_banner_name2key_mapping()`. thx
+			var results = $.ui.autocomplete.filter(availableTags, request.term);
+			results.sort(function(a,b){return (bannerPrioritiesMap[name2key[b]] || 0)-(bannerPrioritiesMap[name2key[a]] || 0)})
+			response(results.slice(0, 20));
+		},
+        minLength: 3,
+		autoFocus: true
+	});
+	rows = []
+	for(var i=0; i < 9; ++i) {
+		rows[rows.length] = { id : i }
+	}
+	row_index = i-1;
+	$( "#rowTemplate" ).tmpl( rows ).appendTo( "#table_items_tbody" );
+	
+	// Create validation rule for currency
+    jQuery.validator.addMethod("decimalTwo", function(value, element) {
+        return this.optional(element) || /^(\d{1,4})(\.\d{2})$/.test(value);
+    }, "Enter number, like 0.00!");
+    
+	jQuery.validator.addMethod("integerTwo", function(value, element) {
+        return this.optional(element) || /^-?(\d{1,4})(\.\d{2})$/.test(value);
+    }, "Enter number, like 0.00!");
+	
+    // Add validation rule to datetime
+	   // Add validation rule to datetime
+    jQuery.validator.addMethod("checkDatetime", function(value, element) {
+	   if (value == "NO_TXN_DATE") {
+		   if ($("#no_date_acc").is(":checked")){
+			   return true;
+		   } else {
+			   return false;
+		   }
+	   } else {
+		   return true;
+	   }
+
+    }, "Are you sure transaction date is not on receipt?");
+
+	// Create validation rule for datetime
+	//jQuery.validator.addMethod("datetime", function(value, element) {
+	//    return this.optional(element) || /^[0-1]?\d\/[0-3]?\d\/\d\d\d\d$/.test(value);
+	//}, "Enter valid date (example 10/26/2011)");
+
+    
+
+     
+	// Add validation rules to amount 
+    $("#mturk_form").validate({
+	   submitHandler: function(form) {
+		 ajax_validation();
+	   }
+    })
+
+	$(".amount").each(function(){
+	   $(this).rules("add", {
+		   decimalTwo: true,
+		   messages: {
+	     	decimalTwo: "Enter a number!" 
+	   	   }
+	   });     
+    });
+   
+   // Add validation rules to UPC
+	$(".upc").each(function(){
+	   $(this).rules("add", {
+		   upc: true,
+	   	   messages: {
+	     	upc: "Please enter a valid UPC, leaving out letters if necessary!"
+	   	   }
+	   });     
+    });
+	  
+ 
+    
+    // Require the first item
+    div_amount1 = $('#amount\\[0\\]');
+	div_amount1.rules("add", { required: true});
+    // init tabbing
+    //$("#tabs").tabs();
+});
+
+
+// We hold off on adding validation rules
+// to the footer fields (i.e. total, subtotal, etc)
+// until the user clicks submit. This is to prevent
+// premature validation / errors displayed when
+// .valid() is run when checking item records as
+// they are entered.
+add_validation_rules = function() {
+    
+ 	$("#salestax").each(function(){
+	   $(this).rules("add", {
+		   decimalTwo: true,
+	   	   messages: {
+	     	upc: "Enter a valid amount, like 0.00!"
+	   	   }
+	   });     
+    });
+    
+   
+ 	$("#subtotal").each(function(){
+	   $(this).rules("add", {
+		   decimalTwo: true,
+		   //required:true,
+	   	   messages: {
+	     	upc: "Enter a valid amount, like 0.00!"
+	   	   }
+	   });     
+    });
+    
+  	$("#total").each(function(){
+	   $(this).rules("add", {
+		   decimalTwo: true,
+		   required:true,
+	   	   messages: {
+	     	upc: "Enter a valid amount, like 0.00!"
+	   	   }
+	   });     
+    });
+	
+    $("#transaction_datetime").each(function(){
+    	$(this).rules("add", {
+    		checkDatetime: true,
+    		required:true,
+    		messages: {
+    			upc: "Choose an option!"
+    		}
+    	});
+    });	
+}
+
+check_items = function() {
+	
+	// Get 2nd to last row
+	rows = $(".amount");
+	row = rows[rows.length-2];
+	
+	// Add row
+	if (row.value != "") {
+		row_index++;	
+		rows = [ {id: row_index }];
+		$( "#rowTemplate" ).tmpl( rows ).appendTo( "#table_items_tbody" );
+	}
+	
+	// Conditionally require RSD, RIN, UPC fields if amount is populated
+	for (i=0; i<rows.length; i++) {
+		div_type = $('#typ\\['+i+'\\]');
+		div_amount = $('#amount\\['+i+'\\]');
+		div_rsd = $('#rsd\\[' + i + '\\]');
+		div_rin = $('#rin\\[' + i + '\\]');
+		div_upc = $('#upc\\[' + i + '\\]');
+		
+		if ((div_type.val() == "Coupon") || (div_type.val() == "Void")){
+			div_amount.rules("add", { integerTwo: true });
+			div_amount.rules("remove", 'decimalTwo');
+			
+			if (div_rin.length > 0) {
+				div_rin.rules("add", { coupon: true });
+				div_rin.rules("remove", 'rino');
+			}
+		}
+		else {
+			div_amount.rules("remove", 'integerTwo');
+			div_amount.rules("add", { decimalTwo: true });
+			
+			if (div_rin.length > 0) {
+				div_rin.rules("add", { rino: true });
+				div_rin.rules("remove", 'coupon');
+			}
+		}
+	
+		if (div_rsd.length > 0) {
+			if (div_amount.val() && require_rsd == true) {
+				div_rsd.rules("add", { required: true });
+			}
+			else {
+				div_rsd.rules("remove", 'required');
+			}
+		}
+		
+		if (div_upc.length > 0) {
+			if (div_amount.val() && require_upc == true) {
+				div_upc.rules("add", { required: true });
+			}
+			else {
+				div_upc.rules("remove", 'required');
+			}
+		}
+	
+		if (div_rin.length > 0) {
+			if (div_amount.val() && require_rin == true) {
+				div_rin.rules("add", { required: true });
+			}
+			else {
+				div_rin.rules("remove", 'required');
+			}
+		}
+		
+		// Require amount if RSD/RIN/UPC
+		if (div_rsd.length > 0 && div_rsd.val() || 
+			div_rin.length > 0 && div_rin.val() ||
+			div_upc.length > 0 && div_upc.val()
+			) {
+			div_amount.rules("add", { required: true });
+		}
+		else {
+			div_amount.rules("remove", 'required');
+		}
+		
+	}
+	
+	// Run validation
+	$("#mturk_form").valid();
+}
+
+//validate = function() {
+//	
+//	amount_cells = $(".amount");	
+//}
+
+
+legibleChange = function() {
+	if(($("#legible").val() == 'YES') && ($("#undoctored").val() == 'YES')){
+		$("#receipt_details_container").show();
+	}
+	else {
+		$("#receipt_details_container").hide();
+	}
+}
+
+bannerChange = function() {
+	if ($("#correct_banner").val() == 'YES') {
+		$("#banner_container").hide();
+		$("#purchased_items_container").show();
+		$("#receipt_footer_container").show();
+	}
+	else {
+		$("#banner_container").show();
+		$("#purchased_items_container").hide();
+		$("#receipt_footer_container").hide();
+	}
+}
+
+ajax_validation = function() {
+	
+	if (!ajax_url) {
+		force_submit();
+		return
+	}
+	
+	// Display loading indicator 
+	$('#submit_btn_text').hide();
+	$('#submit_btn_loading').show();
+	
+	// Post form to server for ajax validation
+	$.post(ajax_url, $("#mturk_form").serialize(), function(data) {
+		
+		// Hide loading indicator
+		if (data['validated'] == 1) {
+			force_submit();
+			return
+		}
+		
+		// Populate warnings
+		$('#warning_errors').empty();
+		for (i=0; i<data['warnings'].length;i++) {
+			$('#warning_errors').append('<li>'+data['warnings'][i]);
+		}
+		
+		// Check if requirign a force fix or just a warning
+		if (data['force_fix']) {
+			$("#warning_submit_hit").hide();
+		}
+		else {
+			$("#warning_submit_hit").show();
+		}
+		
+		// Reshow items if necessary
+		if (data['show_items']) {
+			$("#banner").val('');
+			$("#correct_banner").val("YES");
+			$("#banner_container").hide();
+			$("#purchased_items_container").show();
+			$("#receipt_footer_container").show();
+		}
+			
+		// Hide indicator
+   		$('#submit_btn_loading').hide();
+    	$('#submit_btn_text').show();
+		
+		// Show error
+		$("#warning-modal").dialog("open"); 		
+	});   
+}
+
+submit_form = function() {
+	add_validation_rules();
+	$('#mturk_form').submit();
+}
+
+// Forces submission by unbinding validator from submit handler
+force_submit = function() {
+	$('#mturk_form').unbind('submit').submit();
+}
+
+function itemrow_update_numbering(row, newidx) {
+	while(row.length) {
+		row = row.next()
+		row.data("item-index", ""+newidx)
+		$("td:eq(0) div", row).text((newidx+1) + ".")
+		var update_fields = function(idx, element) {
+			element = $(element)
+			updateidx = function(idx, value) { return value.replace(/\[\d*\]/g, function() { return "[" + newidx + "]" }) }
+			element.attr("name", updateidx)
+			element.attr("id", updateidx)
+		}
+		$("input", row).each(update_fields)
+		$("select", row).each(update_fields)
+		newidx++
+	}
+}
+
+function itemrow_duplicate() {
+	var row = $(this).closest('tr');
+	var id = +row.data("item-index")
+	row.after(row.clone())
+	// Fixing JQuery's degenerate behaviour of not cloning selection status (http://stackoverflow.com/questions/742810/clone-isnt-cloning-select-values/7096897#7096897)
+	var clonedSelects = $("select", row.next())
+	$("select", row).each(function(i) { 
+		clonedSelects.eq(i).prop('selectedIndex', $(this).prop('selectedIndex'));
+	});
+	itemrow_update_numbering(row, id+1)
+	row_index++
+}
+
+function itemrow_remove_safeguard() {
+	if ($('#table_items_tbody tr.receiptitemline').length==1) {
+		alert("Cannot remove last item")
+		return
+	}
+	if (confirm("This action will remove an item!")) {
+		var row = $(this).closest('tr');
+		var id = +row.data("item-index")
+		itemrow_update_numbering(row, id)
+		row.remove();
+		row_index--
+	}
+}
+

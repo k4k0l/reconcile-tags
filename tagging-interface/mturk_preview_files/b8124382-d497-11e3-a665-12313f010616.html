@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0155)https://mturk.infoscoutinc.com/mturk/hit/b8124382-d497-11e3-a665-12313f010616?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=3T6EIBTM9LPWX581NV0AZCEDZLPAAE -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title> M Turk Question </title>
+		<link rel="stylesheet" type="text/css" href="question.css">
+
+		
+		
+		
+		<script type="text/javascript" async="" src="ga.js"></script><script src="raven.min.js"></script>
+		<script>
+			Raven.config('https://8500d7dd386e4d64ad7263b918778a0d@app.getsentry.com/20572').install();
+		</script>
+		
+
+		
+	
+	<link rel="stylesheet" type="text/css" href="full_rdl.css">
+		
+	<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src="jquery.tmpl.min.js"></script>
+	<script type="text/javascript" src="jquery.validate.min.js"></script>
+	<!-- <script type="text/javascript" src="https://s3-us-west-1.amazonaws.com/isc.pricescout.static/mturk/js/full_rdl.js"></script> -->
+    <script type="text/javascript" src="jquery.cookie.js"></script>
+	<link rel="stylesheet" type="text/css" href="jquery-ui-1.8.16.custom.css">
+	<script type="text/javascript" src="banner_names_js"></script>
+	<script type="text/javascript" src="banner_priorities_js"></script>
+	<script type="text/javascript" src="full_rdl_js"></script>
+    <script type="text/javascript" src="jquery.loupe.min.js"></script>
+
+    <script type="text/javascript">
+        
+        
+        var preview = 1;
+        
+        
+        // Ajax validation url
+        
+        var ajax_url = null;
+        
+        
+        // For later item row validation
+        
+	        var require_upc = true;
+	        var require_rin = true;
+	        var require_rsd = true;
+        
+        
+        // Hide/show question on default based on cookie
+        $(function() {
+            
+            if (preview == 1) {
+                hideHelper();
+            }
+            else {
+                if ($.cookie("helper_instructions") == "1") {
+                    showHelper();
+                }
+                else {
+                    hideHelper();
+                }               
+            }
+            $(".no_date_acc_help > a").click(function(){
+                //$tabs.tabs('select', 1);
+                return false;
+            });
+            
+            
+            
+            
+            // Setup warning modal
+            $("#warning-modal").dialog({ autoOpen: false, modal: true, resizable: false });
+            $("#warning-modal").dialog( "option", "width", "650" );
+            $("#warning-modal").dialog( "option", "height", "auto" ); 
+        });
+
+        var toggleHelper = function() {
+            if ($(".question_help").is(":visible")) {
+                hideHelper();
+            }
+            else {
+                showHelper();
+            }
+        }
+        
+        var showHelper = function() {
+            $(".question_help").show();
+            $(".instructions").show();
+            $("#toggleHelper").text("Hide Helper Instructions");
+            $.cookie("helper_instructions", "1");
+        }
+        
+        var hideHelper = function() {
+            $(".question_help").hide();
+            $(".instructions").hide();
+            $("#toggleHelper").text("Show Helper Instructions");
+            $.cookie("helper_instructions", "0");   
+        }
+        
+    </script>
+
+	<script id="rowTemplate" type="text/x-jquery-tmpl"> 
+		  <tr data-item-index="${id}" class="receiptitemline">
+            <td style="padding-top: 10px;" align="left"><div style="width: 20px;">${id+1}.</div></td>
+            
+                <td>
+                    <select class="typ" type="text" name="typ[${id}]" id="typ[${id}]" style="width: 70px;" onChange="check_items()">
+                    
+                        <option value="Item"  selected="selected" >Item</option>
+                    
+                        <option value="Coupon" >Coupon</option>
+                    
+                        <option value="Void" >Void</option>
+                    
+                    </select>
+                </td>
+            
+
+            
+		  	
+		  	
+
+		  	
+		  	
+		  	
+		  		<td><input class="rsd" type="text" name="rsd[${id}]" id="rsd[${id}]" style="width: 220px;" /></td>
+		  	
+		  			  	
+		  	<td align="right">
+		  		<input class="amount" id="amount[${id}]" type="text" name="amount[${id}]" style="width: 50px;" onBlur="check_items()" />
+		  	</td>
+
+			<td>
+				<i title='Remove line' class="item-row-remove item-row-control imageicon" style="background-image: url('https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png')"></i>
+				<i title='Copy line' class="item-row-duplicate item-row-control imageicon" style="background-image: url('https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png')"><i/>
+			</td>
+		  </tr>
+	</script>
+
+
+		
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-29596119-6']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+		
+	</head>
+	
+	<body>		
+		
+	
+
+	
+		<form action="https://www.mturk.com/mturk/externalSubmit" method="post" id="mturk_form" novalidate="novalidate">
+				
+			
+				<div class="title">Extract purchased items from a shopping receipt</div>
+				<div class="description">
+
+	<div class="helper">
+	    <div onclick="toggleHelper();" class="helper_title" id="toggleHelper">Show Helper Instructions</div>
+	    <div class="helper_caption">To ensure you are rewarded for completing the HIT, make sure to follow the instructions</div>
+	</div>	
+
+	
+		<div class="instructions" style="display: none;">
+		<ul style="margin-top:0px;">
+			<li>Transcribe all of the purchased items in the receipt below, copy text exactly</li>
+			<li>For each item, enter the <b>description</b> and the <b>amount</b></li>
+			<li><b>Long Receipt Bonus:</b>  $0.01 bonus reward for every 4 additional items for long receipts after your first 20 items</li>
+		</ul>
+		</div>
+	
+
+	
+	
+
+
+</div>
+				
+				
+				<div class="preview_caption">This is a preview of hit, click ACCEPT HIT above to complete</div>
+				
+				
+				<div class="outer_content">
+					
+ 
+<table>
+    <tbody>
+        <tr>
+            <td valign="top" style="padding-right: 20px;">
+                <div id="question_undoctored" class="question" style="width: 430px">
+                    <div id="question_caption_undoctored" class="question_caption">Is the image a fake or manipulated receipt?</div>
+                    <!-- <div><input type="text" name="basket_qty" id="basket_qty" size="4" class="valid_basket_qty"/></div> -->
+                    <div>
+                        <select name="undoctored" id="undoctored" onchange="legibleChange()" style="width: 430px">
+                            <option value="YES" selected="selected"> NO, image is a real physical receipt</option>
+                            <option value="DOCTORED">YES, image is fake (computer screen, hand-drawn, etc)</option>
+                        </select>
+                    </div>
+                    <div id="question_help_undoctored" class="question_help" style="display: none;">If it is a picture of a receipt on a computer screen or a clearly manipulated receipt (e.g., folding to hide contents), answer "NO".</div>
+                </div>	            
+	            <div class="question">
+	            	<div class="question_caption">Can you read the store, items, &amp; total on receipt?</div>
+	            	<div>
+	            		<select name="legible" id="legible" onchange="legibleChange()" class="valid">
+	            			<option value="YES" selected="selected">YES</option>
+	            			<option value="NOT_RECEIPT">NO, not a shopping receipt</option>
+	            			<option value="NOT_FULL_RECEIPT">NO, full receipt including store, items, &amp; total not provided</option>
+	            			<option value="BLURRY">NO, receipt is too blurry</option>
+	            			<option value="NOT_ENGLISH">NO, cannot transcribe Asian characters</option>
+	            		</select>
+	            	</div>
+	            </div>
+				
+				<div id="receipt_details_container">
+
+		            <div class="question">
+		            	<div class="question_caption">Is the store on the receipt: "Market Basket"?</div>
+		            	<div>
+		            		<select name="correct_banner" id="correct_banner" onchange="bannerChange()">
+		            			<option value="YES" selected="selected">YES</option>
+		            			<option value="NO">NO, wrong store</option>
+		            		</select>
+		            	</div>
+		            </div>
+		            
+		            
+	       		    <div class="question" id="banner_container" style="display: none;">
+		            	<div class="question_caption">Store Name:</div>
+		            	<div>
+		            		<div class="ui-widget">
+								<input type="text" id="banner" name="banner" style="width: 220px;" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+							</div>
+		            	</div>
+		            	<div class="question_help" style="display: none;">Example: Walmart</div>
+		            </div>
+
+
+		            <div class="question" id="purchased_items_container">
+		            	<div class="question_caption">Transcribe all items, coupons, &amp; voids:</div>
+		            	<div id="purchased_items">
+		            		<table class="purchased_items" style="width: 330px; margin-top: 10px;">
+		            			<tbody><tr>
+		            			    <th align="left"> # </th>
+		            			    <th align="left">Type</th>
+		            			       
+		            				
+		            				
+		            				<th align="left">Item Description</th>
+		            				<th align="right">Amount</th>
+		            				<th align="right"></th>
+		            			</tr>
+		            			</tbody><tbody id="table_items_tbody">
+		            				
+		            				  
+									  	  <tr class="example_row">
+									  	   <td style="padding-top: 10px;"><div style="width: 20px;">#</div></td>
+									  	    
+									  	    <td style="padding-top: 10px;" align="right" valign="bottom">
+                                                <input type="text" readonly="true" value="Item" disabled="true" style="width: 70px;">
+                                            </td>
+                                            
+									  	  										  	  	
+										  	
+										  	
+										  	
+										  	
+									  	  	
+										  	<td style="padding-top: 10px;">
+										  		<span>EXAMPLE DESCRIPTION</span>
+										  		<input type="text" readonly="true" value="CLOROX BLEACH" disabled="true" style="width: 220px;">
+										  	</td>
+										  	
+										  	
+										  	<td style="padding-top: 10px;" align="right" valign="bottom">
+										  		<input type="text" readonly="true" value="8.99" disabled="true" style="width: 50px;">
+										  	</td>
+
+											<td>
+											</td>
+										  </tr>
+	
+									  
+		
+		            			<tr data-item-index="0" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">1.</div></td>                              <td>                     <select class="typ" type="text" name="typ[0]" id="typ[0]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[0]" id="rsd[0]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[0]" type="text" name="amount[0]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="1" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">2.</div></td>                              <td>                     <select class="typ" type="text" name="typ[1]" id="typ[1]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[1]" id="rsd[1]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[1]" type="text" name="amount[1]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="2" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">3.</div></td>                              <td>                     <select class="typ" type="text" name="typ[2]" id="typ[2]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[2]" id="rsd[2]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[2]" type="text" name="amount[2]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="3" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">4.</div></td>                              <td>                     <select class="typ" type="text" name="typ[3]" id="typ[3]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[3]" id="rsd[3]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[3]" type="text" name="amount[3]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="4" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">5.</div></td>                              <td>                     <select class="typ" type="text" name="typ[4]" id="typ[4]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[4]" id="rsd[4]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[4]" type="text" name="amount[4]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="5" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">6.</div></td>                              <td>                     <select class="typ" type="text" name="typ[5]" id="typ[5]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[5]" id="rsd[5]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[5]" type="text" name="amount[5]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="6" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">7.</div></td>                              <td>                     <select class="typ" type="text" name="typ[6]" id="typ[6]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[6]" id="rsd[6]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[6]" type="text" name="amount[6]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="7" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">8.</div></td>                              <td>                     <select class="typ" type="text" name="typ[7]" id="typ[7]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[7]" id="rsd[7]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[7]" type="text" name="amount[7]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr><tr data-item-index="8" class="receiptitemline">             <td style="padding-top: 10px;" align="left"><div style="width: 20px;">9.</div></td>                              <td>                     <select class="typ" type="text" name="typ[8]" id="typ[8]" style="width: 70px;" onchange="check_items()">                                              <option value="Item" selected="selected">Item</option>                                              <option value="Coupon">Coupon</option>                                              <option value="Void">Void</option>                                          </select>                 </td>                                                                 <td><input class="rsd" type="text" name="rsd[8]" id="rsd[8]" style="width: 220px;"></td>                       <td align="right">       <input class="amount" id="amount[8]" type="text" name="amount[8]" style="width: 50px;" onblur="check_items()">      </td>     <td>     <i title="Remove line" class="item-row-remove item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/remove_item.png&#39;)"></i>     <i title="Copy line" class="item-row-duplicate item-row-control imageicon" style="background-image: url(&#39;https://s3-us-west-1.amazonaws.com/isc.pricescout.static/rdl/images/duplicate_item.png&#39;)"><i></i>    </i></td>     </tr></tbody>
+		            		</table>
+		            	</div>
+		            </div>
+		            
+		            <div id="receipt_footer_container">
+			            			            
+			            <!--<div class="question">
+			            	<div class="question_caption">Transaction Date:</div>
+			            	<div><input type="text" name="transaction_datetime" id="transaction_datetime" size="20" maxlength="12" class="valid_datetime"/></div>
+			           		<div class="question_help">Example: 2/18/2012 (MM/DD/YYYY). If unable to find transaction date on receipt, leave blank (do NOT enter todays date)</div>
+			            </div>-->
+	                    <div id="question_transaction_date" class="question">
+                        <div id="question_caption_transaction_date" class="question_caption">What is the transaction date on the receipt?</div>
+                        <!--<div><input type="text" name="transaction_datetime" id="transaction_datetime" size="20" maxlength="12" class="valid_datetime"/></div>-->
+                         <div>
+                            <select name="transaction_datetime" id="transaction_datetime" class="valid_datetime">
+                                <option value="" selected="selected">Choose an option below...</option>
+                                
+                                	<option value="05/06/2014">05/06/2014</option>
+                                
+                                	<option value="05/05/2014">05/05/2014</option>
+                                
+                                	<option value="05/04/2014">05/04/2014</option>
+                                
+                                	<option value="05/03/2014">05/03/2014</option>
+                                
+                                	<option value="05/02/2014">05/02/2014</option>
+                                
+                                	<option value="05/01/2014">05/01/2014</option>
+                                
+                                	<option value="04/30/2014">04/30/2014</option>
+                                
+                                	<option value="04/29/2014">04/29/2014</option>
+                                
+                                	<option value="04/28/2014">04/28/2014</option>
+                                
+                                	<option value="04/27/2014">04/27/2014</option>
+                                
+                                	<option value="04/26/2014">04/26/2014</option>
+                                
+                                	<option value="04/25/2014">04/25/2014</option>
+                                
+                                	<option value="04/24/2014" selected="selected">04/24/2014</option>
+                                
+                                	<option value="04/23/2014">04/23/2014</option>
+                                
+                                	<option value="04/22/2014">04/22/2014</option>
+                                
+                                	<option value="04/21/2014">04/21/2014</option>
+                                                               
+                                <option value="OLD_TXN_DATE">More than 15 days old</option>
+                                <option value="NO_TXN_DATE">No transaction date found</option>
+                            </select>
+                        </div>
+                            <div id="no_date_acc_div" style="display: none;">
+                            <!--<div class="no_date_acc_help" style="color:#ff0000">Are you sure transaction date is not on receipt?</div>-->
+                            <!--<div class="no_date_acc_help">Click&nbsp;<a href="#example" rel="#example">here</a> to view example receipt showing location of transaction date</div>-->
+                            <div class="no_date_acc_help"><input type="checkbox" id="no_date_acc" name="no_date_acc"> Yes, I am sure transaction date is not on receipt</div>
+                            </div>
+                        <div id="question_help_transaction_date" class="question_help" style="display: none;">Do NOT choose today's date if you cannot find the date</div>
+                        <!--<div class="question_help">Example: 2/18/2012 (MM/DD/YYYY). <br />If unable to find date on receipt, leave blank. Do NOT enter today's date if you cannot find the date</div>-->
+                        </div>		            
+			            <div class="question">
+			            	<div class="question_caption">SubTotal:</div>
+			            	<div><input type="text" name="subtotal" id="subtotal" size="14" value=""></div>
+			            </div>
+		
+			            <div class="question">
+			            	<div class="question_caption">Sales Tax:</div>
+			            	<div><input type="text" name="salestax" id="salestax" size="14" value=""></div>
+			            </div>
+			            
+			            <div class="question">
+			            	<div class="question_caption">Total:</div>
+			            	<div><input type="text" name="total" id="total" size="14" value="72.35"></div>
+			            	<div class="question_help" style="width: 300px; display: none;">If total not captured in image, mark receipt above as<br> "No, full receipt including store &amp; total not provided"</div>
+			            </div>
+			        </div>
+			        
+	           </div>
+	            
+	            <div id="submit_btn" onclick="submit_form()" class="submit" style="width: 80px; text-align: center;">
+	            	<span id="submit_btn_text">Submit</span>
+	            	<span id="submit_btn_loading" style="display: none;"><img src="spinner.gif" width="20px"></span>
+	            </div>
+	          
+            </td>	
+            
+            <td valign="top">
+                   <div id="receipt">
+	            	<!-- <div style="padding-bottom: 5px; font-size: 11px;">Click on receipt to enlarge if text too small to read</div>  -->
+	         	     <p style="font-size: 11px; margin: 0 0 5px 0;">
+                       KEYBOARD SHORTCUTS:&nbsp;&nbsp;&nbsp;
+                   Scroll: Shift+up/down &nbsp;&nbsp;&nbsp;
+                   Click image to view larger
+	                 </p><div id="viewport" style="width: 518px; text-align: center; height:2100px; background-color: #eeeeee; padding: 5px;">
+		                 
+			                 
+			                     <a target="_blank" href="https://s3.amazonaws.com/isc.pricescout.media/receipts/81ec9b48403644cb8ef316b83450a9cf.png">
+			                         <img width="510px;" alt="receipt" style="margin-right: 10px;" src="81ec9b48403644cb8ef316b83450a9cf.mobile.png">
+			                     </a><br>
+			                 
+			                     <a target="_blank" href="https://s3.amazonaws.com/isc.pricescout.media/receipts/ea7aa88c07ee4076b24da9d797461e5a.png">
+			                         <img width="510px;" alt="receipt" style="margin-right: 10px;" src="ea7aa88c07ee4076b24da9d797461e5a.mobile.png">
+			                     </a><br>
+			                 
+			                     <a target="_blank" href="https://s3.amazonaws.com/isc.pricescout.media/receipts/64fb894c03284c13a3251720c0c7b4f5.png">
+			                         <img width="510px;" alt="receipt" style="margin-right: 10px;" src="64fb894c03284c13a3251720c0c7b4f5.mobile.png">
+			                     </a><br>
+			                 
+			             
+	                     <a target="_blank">
+                       <img src="spacer(1).gif" style="height:3000px;width:1px">
+                      </a>
+	                 </div>
+                 </div>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+		
+
+
+
+
+
+
+
+
+
+
+
+					
+					
+					
+				</div>
+
+								
+				
+			
+			
+			
+				<input type="hidden" name="assignmentId" value="ASSIGNMENT_ID_NOT_AVAILABLE">
+			
+			
+			
+		</form>
+	
+
+<ul class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" role="listbox" aria-activedescendant="ui-active-menuitem" style="z-index: 1; top: 0px; left: 0px; display: none;"></ul><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-warning-modal" style="display: none; z-index: 1000; outline: 0px; height: auto; width: 650px;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-warning-modal">Receipt Warning</span><a href="https://mturk.infoscoutinc.com/mturk/hit/b8124382-d497-11e3-a665-12313f010616?assignmentId=ASSIGNMENT_ID_NOT_AVAILABLE&hitId=3T6EIBTM9LPWX581NV0AZCEDZLPAAE#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="warning-modal" class="ui-dialog-content ui-widget-content" style="width: auto; min-height: 98.03999996185303px; height: auto;">
+	Prior to submitting, please take a look at the warning(s) below to ensure you are rewarded for the HIT:
+	
+	<ul class="warning_errors" id="warning_errors">
+		<li>Warning message here
+	</li></ul>
+	
+	<div style="margin-top: 15px;">
+		<div class="submit" onclick="$(&#39;#warning-modal&#39;).dialog(&#39;close&#39;);" style="float: left; width: 200px; font-size: 14px; margin-right: 14px">Thanks, I'll fix these issues</div>
+		<div class="submit" onclick="force_submit()" id="warning_submit_hit" style="float:left; width: 200px;  font-size: 14px; color: #666;">HIT is correct, please submit</div>
+		<div style="clear: both;"></div>
+	</div>
+	
+	<div style="margin-top: 25px; font-size: 10pt;">
+		If you are unsure or have any questions on transcribbing the HIT, please take a look at the <span style="color: blue; font-size: 9pt; cursor: pointer;" onclick="$(&#39;#warning-modal&#39;).dialog(&#39;close&#39;); $(&#39;#dialog-modal&#39;).dialog(&#39;open&#39;);">example hit</span> 
+	</div>
+</div></div></body></html>

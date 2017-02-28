@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Reconcile comments labelling">
+    <meta name="author" content="Reconcile">
+
+    <title>Reconcile comments labelling proto</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+              <span class="navbar-brand white"><span class="glyphicon white glyphicon-repeat"></span>&nbsp;&nbsp;<span class="white">This is a comment 1 of 5.</span></span>
+              <!-- Trigger contact modal -->
+              <button id="help" class="btn btn-danger pull-right" style="margin-top: 8px; margin-left: 10px;" data-toggle="modal" data-target="#contactModal">Feedback</button>
+              <!-- Trigger help modal -->
+              <button id="help" class="btn btn-danger pull-right" style="margin-top: 8px;" data-toggle="modal" data-target="#helpModal">Help</button>
+          </div>    
+        </div>        
+        <div class="row">
+          <div class="col-sm-4 col-md-3">
+              <span class="navbar-brand"><span class="glyphicon white glyphicon-chevron-right"></span> 1. Read the comment</span>
+          </div>
+          <div class="col-sm-4 col-md-6">
+              <span class="navbar-brand"><span class="glyphicon white glyphicon-chevron-right"></span> 2. Choose the labels</span>
+          </div>
+
+          <div class="col-sm-4 col-md-3">
+              <span class="navbar-brand"><span class="glyphicon white glyphicon-chevron-right"></span> 3. Submit</span>
+              <button id="return" class="btn btn-success pull-right" style="margin-top: 8px;">Submit</button>
+          </div>        
+        </div>
+      </div>      
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-md-3 sidebar">
+            <p class="comment">
+              I did a google search and was able to locate the main homepage for this university, which appears completely credible and has many, also completely credible associated search results for the same university site. This university also appears in Google Maps with a link to the exact same homepage. So, it is clearly a legitimate, physical location that is associated with this exact website. Other supporting info I'm not linking to include college reviews by legitimate UK publications, reviews by many other sites, listings on sites intended to help students choose a university, and a detailed Wiki page with multiple, legitimate sources listed at the bottom.
+            </p>
+            <hr/>
+        </div>
+
+        <div class="col-sm-4 col-sm-offset-5 col-md-6 col-md-offset-3 main" id="groups">
+          <em class="muted" style="clear: both;">Please, choose the labels that reflect the best the meaning of the comment displayed on the left - there could be more than one matching label. Choose at least one label by clicking on a button. The labels you choose are highligted in green.</br></br></em>
+          <div class="alert alert-danger fade in" id="formValidation">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <b>Please select at least 1 tag but no more than 4.</b> If you have difficulties choosing, please select one that has the closest meaning.
+          </div> 
+          <div class="group panel panel-default panel-group">
+            <div class="panel-heading">
+              <h3 class="panel-title">Motivation</h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group-vertical labels">
+                <button type="button" class="btn btn-default" rel="p21" value="21">Advertising</button>
+                <button type="button" class="btn btn-default" rel="p22" value="22">Sales offer</button>
+                <button type="button" class="btn btn-default" rel="p23" value="23">Unknown or <br/>bad intentions</button>           
+              </div>
+            </div>
+          </div>
+          <div class="group panel panel-default panel-group">
+            <div class="panel-heading">
+              <h3 class="panel-title">Author/publisher</h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group-vertical labels">
+                <button type="button" class="btn btn-default" rel="p31" value="31">Author's identity</button>
+                <button type="button" class="btn btn-default" rel="p32" value="32">Authority</button>
+                <button type="button" class="btn btn-default" rel="p33" value="33">Official page</button>
+                <button type="button" class="btn btn-default" rel="p34" value="34">What is the source</button>
+                <button type="button" class="btn btn-default" rel="p35" value="35">Big community</button>
+              </div>
+            </div>
+          </div>   
+          <div class="group panel panel-default panel-group">
+            <div class="panel-heading">
+              <h3 class="panel-title">Design</h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group-vertical labels">
+                <button type="button" class="btn btn-default" rel="p41" value="41">Broken links</button>
+                <button type="button" class="btn btn-default" rel="p42" value="42">A lot of links</button>
+                <button type="button" class="btn btn-default" rel="p43" value="43">Contact information</button>
+                <button type="button" class="btn btn-default" rel="p44" value="44">Content organization</button>
+                <button type="button" class="btn btn-default" rel="p45" value="45">Design look</button>            
+              </div>
+            </div>
+          </div>
+          <div class="group panel panel-default panel-group">
+            <div class="panel-heading">
+              <h3 class="panel-title">Readability</h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group-vertical labels">
+                <button type="button" class="btn btn-default" rel="p51" value="51">Easy to read</button>
+                <button type="button" class="btn btn-default" rel="p52" value="52">Language</button>
+                <button type="button" class="btn btn-default" rel="p53" value="53">Informitivity, completeness</button>         
+              </div>
+            </div>
+          </div>   
+          <div class="group panel panel-default panel-group">
+            <div class="panel-heading">
+              <h3 class="panel-title">Other</h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group-vertical labels">
+                <button type="button" class="btn btn-default" rel="p11" value="11">Type of internet content</button>
+                <button type="button" class="btn btn-default" rel="p61" value="61">Easy to verify</button>
+                <button type="button" class="btn btn-default" rel="p62" value="62">Objectivity</button>
+                <button type="button" class="btn btn-default" rel="p63" value="63">References</button>
+                <button type="button" class="btn btn-default" rel="p64" value="64">Freshness - up to date</button>
+                <button type="button" class="btn btn-default" rel="p65" value="65">Viewer's experience</button>            
+              </div>
+            </div>
+          </div> 
+          <div class="group panel panel-danger panel-group">
+            <div class="panel-heading">
+              <h3 class="panel-title">N/A</h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group-vertical labels">
+                <button type="button" class="btn btn-default" rel="p00" value="00">NO applicable tags</button>        
+              </div>
+            </div>
+          </div>                     
+        </div>
+
+        <div class="col-sm-4 col-md-3 sidebar-right">
+          <em class="muted">You can see an interpretation and sample comments by hovering on a button.</em>
+          <div id="p00" style="display:none;">
+            <h2></h2>
+            <p class="lead">If you don't find any suitable tag for the comment, please use this one instead. Use it whenever you don't know what to choose.</p>
+          </div>
+          <div id="p11" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the type of the commented page, e.g. blog, forum.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „I like the information I get on forums, because most times I know the moderators of these forums safeguard against spammy posts“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „This is just a blog, so I don't know if it is all that credible“</em></p>
+          </div>
+          <div id="p12" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page was a piece of celebrity gossip or was celebrity related.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „It is celebrity gossip, which is credible but also overly sensationalized“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „Celebrity gossip often has gaps in it's information”</em></p>
+          </div>
+          <div id="p13" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page was a piece of news on some news website.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „I recognize CBS as a reputable news source“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „Highly opinionated and subjective news, from largely unknown sources“</em></p>
+          </div>
+          <div id="p14" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page was a scientific study or was of scientific character.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The article is based on scientific study by reputed organization“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „The support given for this idea in the article were not scientifically substantiated and were based on private studies by a commercial company“</em></p>
+          </div>
+          <div id="p21" style="display:none;">
+            <h2></h2>
+            <p class="lead">The page had (many or few) advertisements. The reported ads were annoying or otherwise the ads were not intrusive.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Adobe doesn't normally buy advertising off any bad sites“; </em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „There is much advertising that kind of throws off the design“</em></p>
+          </div>
+          <div id="p22" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page was/wasn't of commercial character or was a sales offer itself.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „There are no visible commercial ties“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „As with anyone trying to sell you a product, there will be at least a slight push towards sales“</em></p>
+          </div> 
+          
+          <div id="p23" style="display:none;">
+            <h2></h2>
+            <p class="lead">The author's intentions are obviously bad or at least not clear, e.g. viruses, scam, fraud.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „I am not sure what the author wanted to achieve by writing this article.“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „I would be worried about malware from this page if I accidentally clicked into it.“</em></p>
+          </div>           
+          <div id="p31" style="display:none;">
+            <h2></h2>
+            <p class="lead">The author of the commented page revealed or not its identity. We know the author’s name, affiliations or we can see author’s photo.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The author signed their name to the article“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „The lack of attribution to the author and a lack of review from a MD leads the viewer to have doubts“</em></p>
+          </div>
+          <div id="p32" style="display:none;">
+            <h2></h2>
+            <p class="lead">The author of the commented page is or is not an expert in the field, a specialist or is well known for some reason.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The author of this particular article Maria Golia is a well known author with a wealth of information on Egypt“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „The author does not present him/herself as an authority on the topic“</em></p>
+          </div>
+          <div id="p33" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the official or unofficial character of the commented page. A company writes about it’s own product, an organization writes about it’s own event or otherwise it’s a music band fan club.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „This appears to be an official, direct from the game studio website“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „It is not official website, so it is not completely credible“</em></p>
+          </div>
+          <div id="p34" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the source of the commented article - governmental organization, charity or university. The comment may also refer to specific domain - .edu, .gov etc.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Johns Hopkins is a nationally known hospital and education center“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „It did not have .edu or .gov suffix, so that was not in favor of credibility“</em></p>
+          </div>   
+          <div id="p35" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the website's audience size or opinions of the visitors expressed in the comments section or forum.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „This page is visited by thousands of people it has to be credible.“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „There are many negative user comments in the comments section below.“</em></p>
+          </div>            
+          <div id="p41" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page contained broken links, i.e. links that were not working properly.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „All pictures and videos worked and loaded correctly“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „There are a lot of broken links and the website has a very poor layout“</em></p>
+          </div>
+          <div id="p42" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page contained a big number of links to other pages or materials.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „It is also credible because it has a lot of links to relevant information“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „There are no links to further information“</em></p>
+          </div>
+          <div id="p43" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page contained or not contact information to the author – an online contact form or a physical address.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Contact information is also included, which I called to verify“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „Site also lacks contact info or FB/Twitter links“</em></p>
+          </div>
+          <div id="p44" style="display:none;">
+            <h2></h2>
+            <p class="lead">The information on the commented page was well/badly organized.  This may refer to usage of bullet points, easily understandable sections etc.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Health sites like these are well organized“ </em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „Very unorganized content“</em></p>
+          </div>
+          <div id="p45" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to how the commented page looked like – page aesthetics and design.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The site looks pretty good, but it is also a bit basic“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Governmental organization with a sleek, professional looking website“ </em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „Very poor design and appearance“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> “Lacks professional look and feel”</em></p>
+          </div>
+          <div id="p51" style="display:none;">
+            <h2></h2>
+            <p class="lead">Whether the page was easy or difficult to read.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Summarizes study with easy to read language“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „I found it too long and rather boring“</em></p>
+          </div>
+          <div id="p52" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the language used in the page’s text – youth slang, technical language, misspellings.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The articles looks well written and informational“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> “It's an interesting read and did not bore me”</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „The multiple misspellings throughout the article made me somewhat skeptical of all of the details“</em></p>
+          </div>
+          <div id="p53" style="display:none;">
+            <h2></h2>
+            <p class="lead">The commented page contained a lot of/little information. The information on the page is complete or not.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The article is detailed with a lot of information“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „I don’t want reviews from fans that are not accurate“</em></p>
+          </div> 
+          <div id="p61" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to how easy it was to find additional information about the commented page’s subject on the Internet, e.g. on google.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Google searches do legitimize the site“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „A google search returns mixed reviews on the site“</em></p>
+          </div>
+          <div id="p62" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the objectivity or subjectivity of the information on the page.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „Just a review so it's basically their opinion or point of view““</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „There is also a certain amount of personal opinion which seems to contain a negative bias</em></p>
+          </div>
+          <div id="p63" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the existence and quality of the references to other sites or articles on the commented page.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The article is very detailed and cites its sources“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „Information is provided by one person, no references listed“</em></p>
+          </div>
+          <div id="p64" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the freshness of the page and information within it.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „The website provides a current publishing date“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „It seems credible but just offers outdated information“</em></p>
+          </div>
+          <div id="p65" style="display:none;">
+            <h2></h2>
+            <p class="lead">The comment refers to the user’s previous experience with that particular page or in general with a product, organization etc.</p>
+            <p>Examples:</p>
+            <p><em><span class="glyphicon glyphicon-thumbs-up"></span> „I am advocating an understanding of my experience“</em></p>
+            <p><em><span class="glyphicon glyphicon-thumbs-down"></span> „I'm not experienced about this topic and could be wrong“</em></p>
+          </div>                             
+        </div>        
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Instructions: how to label the comments</h4>
+          </div>
+          <div class="modal-body instructions">
+            <p class="lead">We are going to present you a short user's comment. The user evaluated credibility of a webpage and left a justification for his rating. This justification should consist of at least two reasons. </p>
+            <div style="margin-left: 10%; margin-right: 10%;">
+              <p>
+                <b>Your task in this HIT is to label ten comments with tags describing the reasons given by the comment's author.</b>
+                <p style="text-align: center;"><br/><img src="imgs/instruction.png" data-state="static" loop="infinite" id="gif" height="179" width="450" style="margin-left: auto; margin-right: auto; -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); cursor: pointer;"><br/><br/></p>
+                <script type="text/javascript">
+
+                </script>
+                <b>Please, folow these steps:</b>
+                
+                <ol>
+                  <li>Read carefully the comment on the left. <img src="imgs/read.png"/></li>
+                  <li>Choose the tags that describe the best the reasons written in the comment.
+                     <img src="imgs/tags.png" class="pull-right">
+                    <ul>
+                      <li>Please, choose at least one tag.</li>
+                      <li>Choose more if they are applicable, but not more than 4.</li>
+                      <li>The tags for your convenience are grouped in groups of similar meaning. The name of the group should give you an overview of the tags within it.</li>
+                      <img src="imgs/sample.png" class="pull-right"/>
+                      <li>You can look up sample comments and interpetations for each tag by hovering mouse cursor over the tag. The interpretation will be displayed on the right.</li>
+                    </ul>
+                  </li>
+
+                  <li>If you marked all applicable tags submit your response by clicking on the green "Submit" button in the top right corner. You will be moved to the next comment.</li>
+
+                  <li>In each HIT you are going to be asked to label 10 tags. The HIT is completed when you finish labeling all of them.  </li>
+                </ol>
+              </p>
+              <p>
+                <b>Important notes:</b>
+                <ul>
+                  <li>Your reponses are going to be validated. In case the quality of your labeling happened to be questionable we claim the right to exclude you from doing further HITs.</li>
+                  <li>Each user is limited to do maximum 100 HITs.</li>
+                  <li>You can come back to this instruction by clicking the red "Help" button in the top right corner.</li>
+                  <li>If you encounter any difficulties or if you have any suggestions or feedback, please click the red "Feedback" button to accesss contact form.</li>
+                </ul>
+
+                Good luck and thank you for your participation,</br>
+                Reconcile team.
+              </p>
+             </div> 
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close this instruction</button>
+          </div>          
+        </div>
+      </div>
+    </div>  
+
+    <!-- Contact Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Feedback & contact form</h4>
+          </div>
+          <div class="modal-body">
+            <div id="contactOK" class="alert alert-success">Thank you for your feedback! We're going to answer your question as soon as possible.</div>
+            <div id="contactFailure" class="alert alert-danger">Oops, an error occured while trying to send your message.</div>
+
+            <div class="well well-sm">
+              <form class="form-horizontal">
+              <fieldset>
+                <legend class="text-center">Did you have problems with the HIT or have any suggestions?  </legend>
+        
+                <!-- Name input-->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="name">Name</label>
+                  <div class="col-md-9">
+                    <input id="name" name="name" type="text" placeholder="Your name" class="form-control">
+                  </div>
+                </div>
+        
+                <!-- Email input-->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="email">Your E-mail</label>
+                  <div class="col-md-9">
+                    <input id="email" name="email" type="text" placeholder="Your email" class="form-control">
+                  </div>
+                </div>
+        
+                <!-- Message body -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="message">Your message</label>
+                  <div class="col-md-9">
+                    <textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>
+                  </div>
+                </div>
+        
+                <!-- Form actions -->
+                <div class="form-group">
+                  <div class="col-md-12 text-right">
+                    <a id="contactSubmit" class="btn btn-primary btn-lg">Submit</a>
+                  </div>
+                </div>
+              </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>       
+
+    <!-- Bootstrap core JavaScript and add-ons
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/docs.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#gif").click(function () {
+          if ($(this).attr("data-state") == "static") {
+            $(this).attr("src", "imgs/instruction.gif");
+          } else {
+            $(this).attr("src", "imgs/instruction.png");
+          }
+        });
+        /* Show instructions at first */
+        $('#helpModal').modal('show'); /* add some "if" to display only on mturk preview */
+        /* Pass the checked as green tags to console or wahtever */
+        $("#return").click(function() {
+            console.log($(".labels button.active").map(function (index) { return $(this).val(); } ));
+          }
+        );        
+        /* Toggle/check as green the tags that are clicked on */
+        $(".labels button").click(function() {$(this).toggleClass("btn-success active");});  
+        /* Show hints on tips on mouse over on tags */
+        $(".labels button").mouseover(
+          function() {
+            var temp="#".concat($(this).attr('rel')); 
+            $(".sidebar-right div").hide();
+            $(temp).show();
+            $(temp.concat(" h2")).text($(this).text());
+          }
+        );
+        /* Process feedback message */
+        $("#contactSubmit").click(
+          function() {
+            $("#contactOK").show();
+          }
+        );
+        /* Shuffle questions */
+        /* Replace js random generator with seeded genereator - for controlled tags groups shuffling */
+        Math.seed = function(s) {
+            Math.random = function() {
+                s = Math.sin(s) * 10000; return s - Math.floor(s);
+            }
+        };        
+        /* Seed = 'tryb eksperymentu', get 'tryb eksperymentu' number and use it as a seed */
+        var exp_condition = 1; /* e.g. 1, 2, 3, 4... to be put here from GET or injected otherwise*/
+        Math.seed(exp_condition * 10);
+        (function($){
+            $.fn.shuffle = function() {
+                var allElems = this.get(),
+                    getRandom = function(max) {
+                        return Math.floor(Math.random() * max);
+                    },
+                    shuffled = $.map(allElems, function(){
+                        var random = getRandom(allElems.length),
+                            randEl = $(allElems[random]).clone(true)[0];
+                        allElems.splice(random, 1);
+                        return randEl;
+                   });
+                this.each(function(i){
+                    $(this).replaceWith($(shuffled[i]));
+                });
+                return $(shuffled);
+            };
+        })(jQuery);
+        /* Shuffle! */
+        $("#groups .group").shuffle();
+      });
+    </script>
+  </body>
+</html>

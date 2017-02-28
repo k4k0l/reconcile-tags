@@ -1,0 +1,61 @@
+body {
+	font-family: Arial;	
+}
+
+.purchased_items {
+	border-collapse: collapse;
+}
+.purchased_items th { font-size: 12px; padding: 4px; font-weight: Bold; background-color: #f7f7f7;}
+.purchased_items td { border-top: 1px solid #CCCCCC; padding: 3px;}
+.purchased_items tr:nth-child(10n+2) { border-top: 3px solid #CCCCCC; padding: 5px;}
+
+.purchased_items input { font-size: 11px;}
+.purchased_items select { font-size: 11px;}
+.purchased_items div { font-size: 11px;}
+.subrow { }
+.subrow td { border-top: 0px; padding-top: 0px; }
+.subrow input {margin-left: 10px; }
+
+.subrow_button { cursor: pointer; color: blue; font-size: 11px; text-decoration: underline; }
+
+.disabled_box { color: #333333; }
+.helpnote { font-size: 11px; color: #666666; }
+.question {
+    margin-bottom: 15px;
+}
+.question_caption {
+    font-weight: bold;
+}
+.question_help {
+    font-size: 11px; color: #666666;
+    word-wrap:break-word;
+}
+.question_help a{
+    font-size: 11px; color: #0000ff;
+}
+.no_date_acc_help {
+    font-size: 11px; color: #666666;
+}
+.no_date_acc_help a {
+    font-size: 11px; color: #0000ff;
+}
+#viewport {
+    width:500px;
+    /*height:700px;*/
+    overflow:scroll;
+    position:relative;
+}
+
+.imageicon {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-top: 1px;
+	line-height: 14px;
+	vertical-align: text-top;
+	background-repeat: no-repeat;
+}
+
+.item-row-control {
+	cursor:pointer;
+}

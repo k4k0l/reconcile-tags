@@ -1,0 +1,136 @@
+* {
+	font-size: 12pt;
+	font-family: Arial;
+}
+
+body {
+	padding: 0; margin: 0;
+}
+
+.title {
+	font-size: 18pt;
+	font-weight: bold;
+	padding: 8px 0 10px 8px;
+}
+
+.description { 
+	padding: 2px 0 2px 8px;
+	border-bottom: 1px solid #CCCCCC;
+	margin-bottom: 8px;
+}
+
+.submit { 
+	font-weight: bold;
+	font-size: 14pt;
+	padding: 8px 26px 8px 26px;
+	color: #006600;
+	background-color: #f7f7f7;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.outer_content {
+	padding: 0 0 0 8px;
+	
+}
+
+.red_submit { 
+    font-weight: bold;
+    font-size: 14pt;
+    padding: 8px 26px 8px 26px;
+    color: #660000;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+textarea {
+	font-size: 12pt;
+}
+select {
+	font-size: 12pt;	
+}
+
+input {
+	font-size: 12pt;
+	padding: 5px; border: 1px solid #ccc;
+}
+
+.feedbacks {
+	border-top: 1px solid #666666;
+	font-size: 11px; color: #666666;
+	width: 400px;
+}
+.feedback {
+	font-size: 11px; color: #666666;
+}
+
+.question {
+	margin-bottom: 15px;
+}
+.question_caption {
+	color: #333;
+	font-size: 11pt;
+	padding-bottom: 2px;
+	font-weight: bold;
+}
+.question_help {
+	font-size: 11px; color: #666666;
+}
+.question_help a{
+	font-size: 11px; color: #0000ff;
+}
+.no_date_acc_help {
+    font-size: 11px; color: #666666;
+}
+.no_date_acc_help a {
+    font-size: 11px; color: #0000ff;
+}
+
+.preview_caption {
+	color: red;
+	font-size: 18px;
+	padding: 5px; 
+	border-bottom: 1px solid #ccc; 
+	margin-bottom: 10px;
+}
+
+label.error { display: block; font-size: 8pt; color: red;}
+input.error {border: 1px solid red;}
+
+tr.example_row { color: #666; }
+tr.example_row span { font-size: 10px; }
+tr.example_row td {padding-below: 10px;}
+tr.example_row input { border: 1px solid #CCCCCC; padding: 4px; color: #888;}
+
+#viewport {
+    width:500px;
+    /*height:700px;*/
+    overflow:scroll;
+    position:relative;
+}
+
+.helper {
+	padding: 0 0 12px 34px;
+	background: url('../images/helper_icon.gif') no-repeat;
+}
+
+.helper_title {
+	cursor: pointer; color: #003399; font-size: 11pt
+}
+
+.helper_caption {
+	font-size: 8pt; font-style: italic; color: #888;
+}
+
+.top_alert {
+	padding: 8px;
+	background-color: #fffcd6;
+	font-size: 9pt;
+	margin-left: -8px;
+}
+
+.top_alert a { font-size: 9pt;}
+
+.warning_errors { color: red; }
