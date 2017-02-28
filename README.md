@@ -8,7 +8,7 @@ https://rawgit.com/s8811/reconcile-tags/master/describe_data.nb.html
 
 ## Tagging interface
 The preview of the user interface the raters have used can be viewed here:
-http://users.pja.edu.pl/~s8811/reconcile-tags/mturk
+https://rawgit.com/s8811/reconcile-tags/master/tagging-interface/mturk_preview.html
 
 ## Data set download
 https://github.com/s8811/reconcile-tags/raw/master/csv/imported.RData
