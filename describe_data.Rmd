@@ -13,6 +13,7 @@ output:
 ```{R,echo=FALSE,messages=FALSE,warning=FALSE}
 library(dplyr)
 library(ggplot2)
+options(digits=2)
 ```
 
 # This appendix motivation
@@ -76,49 +77,71 @@ c3.golden %>%
 
 ## Labelers
 
-This section describes the labelers table. Each row is a labeler, i.e. MTurk job participant tagging the web site evaluation textual justifications.
+This section describes the labelers table. Each row is a labeler (person_id), i.e. MTurk job participant tagging the web site evaluation textual justifications.
 
-* **person_id**, \<fctr\> - 
-* **is_gold**, \<chr\> - 
-* **is_test**, \<lgl\> - 
-* **personexperiment_type**, \<fctr\> - 
-* **person_gender**, \<fctr\> - 
-* **person_birthyr**, \<fctr\> - 
-* **person_education**, \<fctr\> - 
-* **person_wage**, \<fctr\> - 
-* **person_politics**, \<fctr\> - 
-* **person_state**, \<fctr\> - 
-* **person_country**, \<fctr\> - 
+* **person_id**, \<fctr\> - internal ID of a MTurk worker doing labelling tasks
+* **person_user_name**, \<chr\> - MTurk user ID
+* **is_test**, \<lgl\> - is this a test user
+* **person_gender**, \<fctr\> - user's gender
+* **person_birthyr**, \<fctr\> - user's birthyear (1970 was a default value, should be read as NA)
+* **person_education**, \<fctr\> - user's education level
+* **person_wage**, \<fctr\> - user's wage
+* **person_politics**, \<fctr\> - user's political preferences score (left to right)
+* **person_state**, \<fctr\> - user's US state of residence
+* **person_country**, \<fctr\> - user's country of residence
+
+The described data set covers labeling results from `r dim(c3.labelers)[1]` labelers of which `r dim(c3.labelers[c3.labelers$is_test==TRUE,])[1]` were test users, for platform testing purposes only.
+
+Despite the placeholders for the demographic data about the labelers the percentage of the labeling MTurk tasks that did not fill in this questionaire amounted to `r dim(c3.labelers[c3.labelers$person_birthyr=='1970',])[1]/dim(c3.labelers)[1] * 100`% that is why these results are not going to be described here. 
+
 
 ## Labelings
 
-* **commentlabeling_id**, \<fctr\> - 
-* **person_id**, \<fctr\> - 
-* **rater_id**, \<fctr\> - 
-* **documentevaluation_id**, \<fctr\> - 
-* **document_id**, \<fctr\> - 
-* **start**, \<dttm\> - 
-* **end**, \<dttm\> - 
-* **answer**, \<chr\> - 
-* **rejected**, \<lgl\> - 
-* **is_test**, \<lgl\> - 
-* **is_gold**, \<lgl\> - 
-* **is_finished**, \<lgl\> - 
-* **is_ok**, \<lgl\> - 
+The "Labelings" table consists of rows where each row is a labeling (commentlabeling_id) of a single web page credibility evaluation textual justification (documentevaluation_id) from evaluator (rater_id) refering to a web site (document_id).
 
+* **commentlabeling_id**, \<fctr\> - ID of labeling of a single textual credibility score justification
+* **person_id**, \<fctr\> - ID of a labeler
+* **rater_id**, \<fctr\> - ID of rater providing credibility score textual justification
+* **documentevaluation_id**, \<fctr\> - ID of a web page evaluation task
+* **document_id**, \<fctr\> - ID of a web site related to evaluation task
+* **start**, \<dttm\> - task start timestamp
+* **end**, \<dttm\> - task end timestamp
+* **answer**, \<chr\> - provided labels set (tags)
+* **rejected**, \<lgl\> - whether labeling was rejected due to not passing validation
+* **is_test**, \<lgl\> - whether labeling was a test task
+* **is_gold**, \<lgl\> - whether labeling was a validation step
+* **is_finished**, \<lgl\> - whether labeling was successfully finished
+* **is_ok**, \<lgl\> - whether this labeling recordcan be used for further analysis (not test, sucessfuly finished and validated)
+
+
+
+Summary of the labeling duration is shown below (in seconds)
+```{r}
+temp <- c3.labelings
+temp <- temp[temp$is_ok==TRUE,]
+#hist(as.numeric(temp$end-temp$start),breaks = 100)
+summary(as.numeric(temp$end-temp$start))
+```
 
 ## Labelings (exploded)
 
-* **commentlabeling_id**, \<fctr\> - 
-* **person_id**, \<fctr\> - 
-* **documentevaluation_id**, \<fctr\> - 
-* **document_id**, \<fctr\> - 
-* **category**, \<chr\> - 
-* **credibility**, \<int\> - 
-* **label**, \<fctr\> - 
+* **commentlabeling_id**, \<fctr\> - ID of labeling of a single textual credibility score justification
+* **person_id**, \<fctr\> - ID of a labeler
+* **documentevaluation_id**, \<fctr\> - ID of a web page evaluation task
+* **document_id**, \<fctr\> - ID of a web site related to evaluation task
+* **category**, \<chr\> - thematic category of a related web page
+* **credibility**, \<int\> - credibility score (aggregated and binned) of the related web page
+* **label**, \<fctr\> - a single tag code
 
 ```{r}
-head(c3.labelings)
+unique(c3.labelings_exploded$label)
+```
+
+```{r}
+?rename
+as.data.frame(prop.table(table(c3.labelings_exploded[!is.na(c3.labelings_exploded$label),"label"]))*100) %>%
+  rename(tag_code=Var1,Percentage=Freq) %>%
+  inner_join(c3.tags)
 ```
 
 ```{r}
@@ -130,19 +153,19 @@ hist(as.numeric(temp$end-temp$start),breaks = 100,)
 
 ## Sites
 
-* **document_id**, \<fctr\> - 
-* **document_url**, \<chr\> - 
-* **document_category_id**, \<fctr\> - 
-* **document_children**, \<int\> - 
-* **document_source_type**, \<fctr\> - 
-* **document_source_name**, \<fctr\> - 
-* **document_category_name**, \<fctr\> - 
+* **document_id**, \<fctr\> - web page ID
+* **document_url**, \<chr\> - web page url
+* **document_category_id**, \<fctr\> - web page thematic category ID
+* **document_children**, \<int\> - number of archived children web pages 
+* **document_source_type**, \<fctr\> - ID of a web pages acquisition step
+* **document_source_name**, \<fctr\> - (for web pages acquiried from Google) a related Google query
+* **document_category_name**, \<fctr\> -  web page thematic category label
 
 ## Tags
 
-* **tag_code**, \<fctr\> - 
-* **tag_label**, \<chr\> - 
-* **tag_group**, \<fctr\> - 
+* **tag_code**, \<fctr\> - label ID
+* **tag_label**, \<chr\> - full label name
+* **tag_group**, \<fctr\> - (temporary) label group
 
 ```{r}
 c3.tags
