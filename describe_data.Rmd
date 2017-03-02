@@ -7,6 +7,8 @@ output:
     code_folding: hide
     number_sections: yes
     toc: yes
+  html_document:
+    toc: yes
   pdf_document:
     toc: yes
 ---
@@ -20,18 +22,29 @@ options(digits=2)
 
 This is a data set report supplementing the article "Understanding and Predicting Web Content Credibility: Newly Identified Factors". The main purpose of this report is to describe the data set covered in the article in more detail thus extending the limited space of the publication.
 
-OPIS RELACJI MIĘDZY TABELAMI
- -> JAK ZBIERANO DANE, OPIS PROCESU
+# Download
 
-LINK DO MOCKUPU 
+* This data set itself can be downloaded [here](https://github.com/s8811/reconcile-tags/raw/master/csv/imported.RData)
+
+# MTurk labeling interface
+
+* The interface the crowdsourcing workers used to label the textual justification can be previewed [here](https://rawgit.com/s8811/reconcile-tags/master/tagging-interface/mturk_preview.html).
 
 # Tables
 
-This section describes data set tables.
+This section describes data tables. The relations between the tables and records within is depicted in the diagram below. The flow of the data as they were gathers was as follows. In a separate study a set of web pages (pages) was evaluated in terms of their (inter alia) credibility and a textual justification of this evaluation was gathered accordingly (evaluations). In the study covered by the article "Understanding and Predicting Web Content Credibility" the textual justications (evaluations) were labeled in a crowdsourcing setting by multiple labelers (labelers), thus providing a description of the evaluations and their corresponding web pages with a set of labels representing possibe credibility related web page and content issues (evaluations_labelings and evaluations_labelings_exploded).
+
+![Tables relations](reconcile-tags-diagram.png)
 
 ## Evaluations
 
 This table consists of raters' evaluations of the web pages they were presented. The rater was presented with the archived version of the web site and asked to evaluate it in several dimensions as well as leave a textual justification of the evaluation outcome.
+
+This table consists of `r dim(c3.evaluations)` records, which is a number of credibility evaluations gathered in [Reconcile](http://reconcie.pjwstk.edu.pl) project for the day the tagging data set was separetd from the original data set. However the number of evaluations labeled in this study is `r c3.evaluations %>%
+  semi_join(c3.labelings,by=c("documentevaluation_id")) %>%
+  select(document_id) %>%
+  unique %>%
+  nrow`.
 
 * **rater_id**, \<fctr\\> - ID of a person that evaluated the web page
 * **documentevaluation_id**, \<fctr\> - ID of the aforementioned evaluation
@@ -62,7 +75,7 @@ head(c3.evaluations)
 
 ## Golden examples
 
-This section describes the golden examples used for validating the rater' work.
+This section describes the golden examples used for validating the rater' work. There was at least 2 golden examples per possible label.
 
 * **documentevaluation_id**, <fctr> - ID of the golden example
 * **tag_code**, <fctr> - ID of the tag being validated
@@ -113,7 +126,19 @@ The "Labelings" table consists of rows where each row is a labeling (commentlabe
 * **is_finished**, \<lgl\> - whether labeling was successfully finished
 * **is_ok**, \<lgl\> - whether this labeling recordcan be used for further analysis (not test, sucessfuly finished and validated)
 
-
+`r c3.labelings %>%
+  select(document_id) %>%
+  unique %>%
+  as.vector %>% 
+  nrow` documents were labeled by `r c3.labelings %>%
+  select(rater_id) %>%
+  unique %>%
+  as.vector %>% 
+  nrow` raters in `r c3.labelings %>%
+  select(commentlabeling_id) %>%
+  unique %>%
+  as.vector %>% 
+  nrow` labeling tasks.
 
 Summary of the labeling duration is shown below (in seconds)
 ```{r}
@@ -133,22 +158,11 @@ summary(as.numeric(temp$end-temp$start))
 * **credibility**, \<int\> - credibility score (aggregated and binned) of the related web page
 * **label**, \<fctr\> - a single tag code
 
+Below is a table representing number of times certain label was assigned to all documentevaluation record.
 ```{r}
-unique(c3.labelings_exploded$label)
-```
-
-```{r}
-?rename
-as.data.frame(prop.table(table(c3.labelings_exploded[!is.na(c3.labelings_exploded$label),"label"]))*100) %>%
+as.data.frame(prop.table(table(c3.labelings_exploded[!is.na(c3.labelings_exploded$label),"label"]))) %>%
   rename(tag_code=Var1,Percentage=Freq) %>%
   inner_join(c3.tags)
-```
-
-```{r}
-temp <- c3.labelings[c3.labelings$is_ok == TRUE,]
-temp$duration <- temp$end-temp$start
-summary(as.numeric(temp$duration))
-hist(as.numeric(temp$end-temp$start),breaks = 100,)
 ```
 
 ## Sites
@@ -161,7 +175,27 @@ hist(as.numeric(temp$end-temp$start),breaks = 100,)
 * **document_source_name**, \<fctr\> - (for web pages acquiried from Google) a related Google query
 * **document_category_name**, \<fctr\> -  web page thematic category label
 
+There is `r c3.sites %>%
+  select(document_id) %>% 
+  unique %>% 
+  nrow` documents from which `r c3.sites %>%
+  semi_join(c3.labelings,by=c("document_id")) %>%
+  select(document_id) %>% 
+  unique %>% 
+  nrow` were labeled and are considered to come from following thematic categories, shown in table below:
+
+```{r}
+c3.sites %>%
+  semi_join(c3.labelings,by=c("document_id")) %>%
+  select(document_category_name) %>%
+  table %>%
+  prop.table %>%
+  as.data.frame %>%
+  rename(Percentage=Freq)
+```
+
 ## Tags
+Tags are labels used by labelers to describe raters reasons to evaluate a web page high or low. 
 
 * **tag_code**, \<fctr\> - label ID
 * **tag_label**, \<chr\> - full label name
