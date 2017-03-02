@@ -6,6 +6,8 @@ This is a repository for an appendix to "Understanding and Predicting Web Conten
 The appendix data set report can be viewed here:
 https://rawgit.com/s8811/reconcile-tags/master/describe_data.nb.html
 
+![Tables diagram](reconcile-tags-diagram.png)
+
 ## Tagging interface
 The preview of the user interface the raters have used can be viewed here:
 https://rawgit.com/s8811/reconcile-tags/master/tagging-interface/mturk_preview.html
