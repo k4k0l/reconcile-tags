@@ -1,5 +1,5 @@
 ---
-title: 'Appendix: Understanding and Predicting Web Content Credibility'
+title: 'Appendix: Understanding and Predicting Web Content Credibility Using the Content Credibility Corpus'
 author: "Michał Kąkol"
 date: "24 02 2017"
 output:
@@ -20,7 +20,7 @@ options(digits=2)
 
 # This appendix motivation
 
-This is a data set report supplementing the article "Understanding and Predicting Web Content Credibility: Newly Identified Factors". The main purpose of this report is to describe the data set covered in the article in more detail thus extending the limited space of the publication.
+This is a data set report supplementing the article "Understanding and Predicting Web Content Credibility Using the Content Credibility Corpus". The main purpose of this report is to describe the data set covered in the article in more detail thus extending the limited space of the publication.
 
 # Download
 
@@ -40,7 +40,7 @@ This section describes data tables. The relations between the tables and records
 
 This table consists of raters' evaluations of the web pages they were presented. The rater was presented with the archived version of the web site and asked to evaluate it in several dimensions as well as leave a textual justification of the evaluation outcome.
 
-This table consists of `r dim(c3.evaluations)` records, which is a number of credibility evaluations gathered in [Reconcile](http://reconcie.pjwstk.edu.pl) project for the day the tagging data set was separetd from the original data set. However the number of evaluations labeled in this study is `r c3.evaluations %>%
+This table consists of `r dim(c3.evaluations)` records, which is a number of credibility evaluations gathered in [Reconcile](http://reconcile.pjwstk.edu.pl) project for the day the tagging data set was separetd from the original data set. However the number of evaluations labeled in this study is `r c3.evaluations %>%
   semi_join(c3.labelings,by=c("documentevaluation_id")) %>%
   select(document_id) %>%
   unique %>%
